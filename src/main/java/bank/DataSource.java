@@ -27,7 +27,7 @@ public class DataSource {
     return instance;
   }
 
-  public Connection getConnection() {
+  private Connection getConnection() {
     return connection;
   }
 
