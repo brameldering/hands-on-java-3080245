@@ -1,11 +1,9 @@
+package bank;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-
-import bank.Account;
-import bank.Customer;
 
 public class DataSource {
 
@@ -39,7 +37,7 @@ public class DataSource {
           }
           statement.executeQuery();
       
-    } catch (Exception e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
     return customer;
@@ -59,20 +57,35 @@ public static Account getAccount(int id) {
             resultSet.getString("type"), 
             resultSet.getDouble("balance"));
           }
-          statement.executeQuery();
+          // statement.executeQuery();
       
-    } catch (Exception e) {
+    } catch (SQLException e) {
       e.printStackTrace();
     }
     return account;
   }
 
-  public static void main(String[] args) {
-    Customer customer = getCustomer("bwailes4a@mac.com");
-    System.out.println(customer.getName());
-    int accountId = customer.getAccountId();
-    System.out.println("accountId: " + accountId);
-    Account account = getAccount(accountId);
-    System.out.println("Type: " + account.getType() + " - Balance: " + account.getBalance());
+  public static void updateAccountBalance(int accountId, double amount) {
+    String sql = "update accounts set balance = ? where id = ?";
+    try (Connection connection = connect(); 
+        PreparedStatement statement = connection.prepareStatement(sql)) {
+
+          statement.setDouble(1, amount);
+          statement.setInt(2, accountId);
+
+          statement.executeUpdate();      
+    } catch (SQLException e) {
+      e.printStackTrace();
+    }
+
   }
+
+  // public static void main(String[] args) {
+  //   Customer customer = getCustomer("bwailes4a@mac.com");
+  //   System.out.println(customer.getName());
+  //   int accountId = customer.getAccountId();
+  //   System.out.println("accountId: " + accountId);
+  //   Account account = getAccount(accountId);
+  //   System.out.println("Type: " + account.getType() + " - Balance: " + account.getBalance());
+  // }
 }
