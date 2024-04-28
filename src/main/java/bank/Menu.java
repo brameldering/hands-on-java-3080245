@@ -18,7 +18,7 @@ public class Menu {
     Customer customer = menu.authenticateUser();
 
     if(customer != null) {
-      Account account = DataSource.getAccount(customer.getAccountId());
+      Account account = DataSource.getInstance().getAccount(customer.getAccountId());
       menu.showMenu(customer, account);
     }
 

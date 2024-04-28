@@ -54,7 +54,7 @@ public class Account {
     } else {
       double newBalance = round(this.balance + amount, 2);
       setBalance(newBalance);
-      DataSource.updateAccountBalance(id, newBalance);
+      DataSource.getInstance().updateAccountBalance(id, newBalance);
       System.out.println("New Balance: " + newBalance);
     }
   }
@@ -67,7 +67,7 @@ public class Account {
     } else {
       double newBalance = round(this.balance - amount, 2);
       setBalance(newBalance);
-      DataSource.updateAccountBalance(id, newBalance);
+      DataSource.getInstance().updateAccountBalance(id, newBalance);
       System.out.println("New Balance: " + newBalance);
     }
   }
